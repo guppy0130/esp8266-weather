@@ -21,5 +21,5 @@
 2. Obtain drivers from [silabs.com](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
 3. Follow instructions from the [esp8266/Arduino repo](https://github.com/esp8266/Arduino) to set up IDE/board communication
 4. Obtain DarkSky API key
-5. Replace SSID, password, DarkSky API key, and GPS coordinates in sketch
+5. Replace SSID, password, GMT offset, DarkSky API key, and GPS coordinates in sketch
 6. Upload sketch to ESP8266
