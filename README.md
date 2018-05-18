@@ -14,6 +14,7 @@
 	* [GxEPD library](https://github.com/ZinggJM/GxEPD)
 	* [ArduinoJSON library](https://github.com/bblanchon/ArduinoJson)
 	* [ESP8266 Arduino Core](https://github.com/esp8266/Arduino)
+* [DarkSky API Key](https://darksky.net/dev/docs)
 
 ### Build Instructions
 1. Connect PC to ESP8266
