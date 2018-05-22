@@ -17,48 +17,43 @@ GxEPD_Class display(io, -1, 4);
 const GFXfont* FreeMonoBold9 = &FreeMonoBold9pt7b;
 
 void setup() {
-  Serial.begin(115200);
   display.init();
   WiFi.mode(WIFI_STA);
-  WiFi.begin("SSID", "PASSWORD");
+  WiFi.begin("SSID", "PASSWORD"); //TODO: REPLACE SSID & PASSWORD
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
   }
 
-  configTime(OFFSET * 3600, 1, "pool.ntp.org", "time.nist.gov"); // replace OFFSET with your timezone offset from GMT
+  configTime(OFFSET * 3600, 1, "pool.ntp.org", "time.nist.gov"); //TODO: REPLACE OFFSET
   while (!time(nullptr)) {
     delay(1000);
   }
 
   const GFXfont* FreeMonoBold9 = &FreeMonoBold9pt7b;
-  
-  clearScreen();
-  display.println(WiFi.localIP());
-  weather();  
-  display.update();
-//  ESP.deepSleep(36e8);
-}
 
-void clearScreen() {
   display.fillScreen(GxEPD_WHITE);
-  display.setRotation(0); // 0 is text towards ribbon, 45 is rotated left
+  display.setRotation(90); // 0 is text towards yellow, 45 is rotated left
   display.setCursor(0, 0);
   display.setTextColor(GxEPD_BLACK);
   display.setFont(FreeMonoBold9);
   display.println();
+  weather();
+  display.update();
+  ESP.deepSleep(1000*1000*60*5);
 }
 
 void weather() {
   WiFiClientSecure client;
   char* host = "api.darksky.net";
-  char* url = "/forecast/DARKSKY-API-KEY/LAT,LON?exclude=minutely,hourly,daily,alerts,flags";
+  char* url = "/forecast/DARKSKY_API_KEY/LAT,LON?exclude=minutely,hourly,daily,alerts,flags";
+  const int httpsPort = 443;
   const char* fingerprint = "c0cdf85cdbf3520daf7975ea612a958a4907dc33";
- 
+
   if (client.connect(host, httpsPort)) {
     client.print(String("GET ") + url + " HTTP/1.1\r\n" +
                "Host: " + host + "\r\n" +
                "Connection: close\r\n\r\n");
-    
+
     char status[32] = {0};
     client.readBytesUntil('\r', status, sizeof(status));
     if (strcmp(status, "HTTP/1.1 200 OK") == 0) {
@@ -72,10 +67,10 @@ void weather() {
 
           // Header
           display.println("<< WEATHER >>");
-          
+
           // time
           int offset = root["offset"];
-          
+
           time_t now = time(nullptr);
           char buff[35];
           strftime(buff, sizeof buff, "%D %R", localtime(&now));
@@ -134,15 +129,6 @@ void weather() {
   }
 }
 
-int loopCounter = 0;
 void loop() {
-  loopCounter++;
-  if (loopCounter == 300) { // every 300 seconds
-    clearScreen();
-    display.println(WiFi.localIP());
-    weather();
-    display.update();
-    loopCounter = 0;
-  }
-  delay(1000);
+
 }
