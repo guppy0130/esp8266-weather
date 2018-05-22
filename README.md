@@ -1,9 +1,10 @@
 # ESP8266 Weather Display
+[Powered by Dark Sky](https://darksky.net/poweredby/)
 
 ## Hardware
 ### Components
 * ESP8266 (I used a NodeMCU v1)
-* Waveshare E-Paper display
+* Waveshare 1.54" E-Paper display
 
 ### Build Instructions
 1. Connect ESP8266 and Waveshare E-Paper display according to the [ZinggJM/GxEPD repo](https://github.com/ZinggJM/GxEPD)
